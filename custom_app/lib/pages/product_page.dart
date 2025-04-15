@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:custom_app/models/product_model.dart';
 import 'package:custom_app/pages/home_page.dart';
+import 'package:custom_app/widgets/expand_description.dart';
 
 
 class ProductPage extends StatelessWidget{
@@ -12,7 +13,8 @@ class ProductPage extends StatelessWidget{
   Widget build(BuildContext context){
      return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(child: Padding (
+      body: SafeArea(
+        child: Padding (
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,11 +61,8 @@ class ProductPage extends StatelessWidget{
             style: TextStyle(fontSize: 20), 
             ),
             SizedBox(height:12),
-            Text(
-              product.productDescription,
-              style: TextStyle(fontSize: 16),
-            ),
-             Container(
+            ExpandDescription(text: product.productDescription),
+            Container(
             margin: EdgeInsets.symmetric(vertical: 12),
             height: 2,
             color: Colors.grey[200],

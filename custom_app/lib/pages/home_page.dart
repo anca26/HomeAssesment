@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage>{
   @override 
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: backgroundGray,
       body: SafeArea(child: Padding (
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -92,14 +92,14 @@ class _HomePageState extends State<HomePage>{
                     Text(
                   'Products', 
                   style: TextStyle(
-                    color: Colors.white, //change later
+                    color: Colors.black, 
                     fontSize: 30,
                     fontWeight: FontWeight.bold
                   )),
                     Text(
                       '${searchedProducts.length} products found',
                        style: TextStyle(
-                        color: Colors.black, //change later
+                        color: Colors.black,
                         fontSize: 16,
                        ),
                     ),

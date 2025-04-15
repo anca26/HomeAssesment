@@ -37,7 +37,7 @@ class _FavoritePageState extends State<FavoritePage>
   @override 
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: backgroundGray,
       body: SafeArea(child: Padding (
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -53,14 +53,14 @@ class _FavoritePageState extends State<FavoritePage>
                     Text(
                   'Favorite Products', 
                   style: TextStyle(
-                    color: Colors.white, //change later
+                    color: Colors.black,
                     fontSize: 30,
                     fontWeight: FontWeight.bold
                   )),
                     Text(
                       '${favoriteProducts.length} products',
                        style: TextStyle(
-                        color: Colors.white, //change later
+                        color: Colors.black, 
                         fontSize: 16,
                        ),
                     ),
@@ -71,7 +71,7 @@ class _FavoritePageState extends State<FavoritePage>
                     Icon(
                     Icons.home, 
                     size: 40, 
-                    color: Colors.white),
+                    color: Colors.black),
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage() ));
                   }
