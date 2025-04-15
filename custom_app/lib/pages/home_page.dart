@@ -12,9 +12,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>{
-  final List<Product> allProducts = [];
+  List<Product> allProducts = [];
   List<Product> searchedProducts = [];
   Color backgroundGray = const Color.fromARGB(255, 244, 244, 244);
+  String searchText = "";
   
   @override 
   void initState(){
@@ -27,11 +28,22 @@ class _HomePageState extends State<HomePage>{
     List<Product> fetchedProducts = await ApiService.fetchProducts();
     setState(() {
       allProducts.addAll(fetchedProducts);
+      searchedProducts = fetchedProducts;
       });
     }catch(e){
-      print('Error at fetching products: $e');
+      debugPrint('Error at fetching products: $e');
     }
   }
+
+  void updateSearch(String value) {
+    setState(() {
+      searchText = value.toLowerCase();
+      searchedProducts = allProducts
+          .where((product) => product.productName.toLowerCase().contains(searchText))
+          .toList();
+    });
+  }
+
 
   @override 
   Widget build(BuildContext context){
@@ -54,6 +66,7 @@ class _HomePageState extends State<HomePage>{
                   ),
                   
               ),
+              onChanged: updateSearch,
             ),
             SizedBox(height: 24),
             Row(
@@ -100,7 +113,7 @@ class _HomePageState extends State<HomePage>{
                   childAspectRatio: 0.8,
                   ),
                 itemBuilder: (context, index) {
-                  final product = allProducts[index];
+                  final product = searchedProducts[index];
                   return ProductItem(product: product);
                 },
               ),
