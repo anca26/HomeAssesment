@@ -73,7 +73,7 @@ class _FavoritePageState extends State<FavoritePage>
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.0),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
                       'Item ${index +1}',

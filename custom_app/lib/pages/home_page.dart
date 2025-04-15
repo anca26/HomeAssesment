@@ -1,5 +1,8 @@
+import 'package:custom_app/widgets/product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_app/pages/favorite_page.dart';
+import 'package:custom_app/models/product_model.dart';
+import 'package:custom_app/services/api_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,9 +12,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>{
-  // tbi: final List<Product> products = [];
+  final List<Product> products = [];
   Color backgroundGray = const Color.fromARGB(255, 244, 244, 244);
-  int itemCount = 12; //delete this later
+  
+  @override 
+  void initState(){
+    super.initState();
+    fetchProducts();
+    }
+
+  Future<void> fetchProducts() async{
+    try {
+    List<Product> fetchedProducts = await ApiService.fetchProducts();
+    setState(() {
+      products.addAll(fetchedProducts);
+      });
+    }catch(e){
+      print('Error at fetching products: $e');
+    }
+  }
 
   @override 
   Widget build(BuildContext context){
@@ -50,7 +69,7 @@ class _HomePageState extends State<HomePage>{
                     fontWeight: FontWeight.bold
                   )),
                     Text(
-                      '${itemCount} products found',
+                      '${products.length} products found',
                        style: TextStyle(
                         color: Colors.white, //change later
                         fontSize: 16,
@@ -72,7 +91,7 @@ class _HomePageState extends State<HomePage>{
             SizedBox(height:24),
             Expanded(
               child: GridView.builder(
-                itemCount: itemCount, //products.length after fetching 
+                itemCount: products.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 24,
@@ -80,17 +99,19 @@ class _HomePageState extends State<HomePage>{
                   childAspectRatio: 0.8,
                   ),
                 itemBuilder: (context, index) {
-                  //tbi  DisplayItem(product: product)
-                  return Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Text(
-                      'Item ${index +1}',
-                    ),
-                  );
+                  final product = products[index];
+                  return ProductItem(product: product);
+
+                  // return Container(
+                  //   alignment: Alignment.center,
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //     borderRadius: BorderRadius.circular(16),
+                  //   ),
+                  //   child: Text(
+                  //     'Item ${index +1}',
+                  //   ),
+                  // );
                 },
               ),
             ),

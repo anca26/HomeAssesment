@@ -5,7 +5,7 @@ import 'package:custom_app/models/product_model.dart';
 
 void main() {
   runApp(const MyApp());
-  testAPI();
+  //testAPI();
 }
 
 class MyApp extends StatelessWidget {
@@ -51,16 +51,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-void testAPI() async {
-  try{
-    List<Product> products = await ApiService.fetchProducts();
-    for (var product in products) {
-      print('name: ${product.productName}');
-      print('price: ${product.productPrice}');
+// void testAPI() async {
+//   try{
+//     List<Product> products = await ApiService.fetchProducts();
+//     for (var product in products) {
+//       print('name: ${product.productName}');
+//       print('price: ${product.productPrice}');
       
-    }
-    }catch(e){
-      print('Error $e');
-    }
-  }
+//     }
+//     }catch(e){
+//       print('Error $e');
+//     }
+//   }
 
