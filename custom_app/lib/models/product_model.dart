@@ -6,7 +6,6 @@ class Product {
   final double productPrice;
   final String productImage;
 
-
   Product({
     required this.id,
     required this.productName,

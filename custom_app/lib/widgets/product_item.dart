@@ -4,21 +4,15 @@ import 'package:custom_app/models/product_model.dart';
 class ProductItem extends StatefulWidget{
 
   final Product product;
-  ProductItem({required this.product});
+  final bool isFavorite;
+  final VoidCallback onToggleFavorite;
+  ProductItem({required this.product, required this.isFavorite, required this.onToggleFavorite});
 
   @override
   State<ProductItem> createState() => _ProductItemState();
 }
 
 class _ProductItemState extends State<ProductItem>{
-    bool isFavorite = false;
-    //future function for adding to fav
-
-    void toggleFavorite() {
-      setState(() {
-        isFavorite = !isFavorite;
-      });
-    }
 
   @override
   Widget build(BuildContext context){
@@ -59,10 +53,10 @@ class _ProductItemState extends State<ProductItem>{
             top: 3,
             right: 3,
             child: IconButton(
-              onPressed: toggleFavorite, 
+              onPressed: widget.onToggleFavorite, 
               icon: Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: isFavorite ? Colors.deepPurple : Colors.black, 
+                widget.isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: widget.isFavorite ? Colors.deepPurple : Colors.black, 
               ),
             ),
           ),

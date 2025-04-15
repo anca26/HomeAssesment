@@ -14,7 +14,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>{
   List<Product> allProducts = [];
   List<Product> searchedProducts = [];
-  Color backgroundGray = const Color.fromARGB(255, 244, 244, 244);
+  List<Product> favoriteProducts = [];
+  Color backgroundGray = const Color.fromARGB(255, 232, 232, 232);
   String searchText = "";
   
   @override 
@@ -41,6 +42,19 @@ class _HomePageState extends State<HomePage>{
       searchedProducts = allProducts
           .where((product) => product.productName.toLowerCase().contains(searchText))
           .toList();
+    });
+  }
+
+  void toggleFavorite(Product product){
+    setState(() {
+      if(favoriteProducts.contains(product))
+        {
+          favoriteProducts.remove(product);
+        }
+      else 
+        {
+          favoriteProducts.add(product);
+        }
     });
   }
 
@@ -98,7 +112,7 @@ class _HomePageState extends State<HomePage>{
                     size: 40, 
                     color: Colors.white),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritePage() ));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritePage(favorites: favoriteProducts) ));
                   }
                  ),
               ],),
@@ -114,7 +128,11 @@ class _HomePageState extends State<HomePage>{
                   ),
                 itemBuilder: (context, index) {
                   final product = searchedProducts[index];
-                  return ProductItem(product: product);
+                  return ProductItem(
+                    product: product,
+                    isFavorite: favoriteProducts.contains(product),
+                    onToggleFavorite: () => toggleFavorite(product),
+                    );
                 },
               ),
             ),

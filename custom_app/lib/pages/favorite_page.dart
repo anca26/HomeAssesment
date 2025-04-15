@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:custom_app/pages/home_page.dart';
+import 'package:custom_app/widgets/product_item.dart';
+import 'package:custom_app/models/product_model.dart';
 
 
 class FavoritePage extends StatefulWidget{
-    const FavoritePage({super.key});
+    List<Product> favorites;
+
+    FavoritePage({required this.favorites});
 
     @override 
     State<FavoritePage> createState() => _FavoritePageState();
@@ -11,8 +15,24 @@ class FavoritePage extends StatefulWidget{
 
 class _FavoritePageState extends State<FavoritePage>
 {
-  Color backgroundGray = const Color.fromARGB(255, 244, 244, 244);
-  int itemCount = 6; //delete this later
+
+  late List<Product> favoriteProducts;
+  Color backgroundGray =  Color.fromARGB(255, 232, 232, 232);
+
+  @override 
+  void initState() {
+    super.initState();
+    favoriteProducts = List.from(widget.favorites);
+  }
+
+   void toggleFavorite(Product product){
+    setState(() {
+      if(favoriteProducts.contains(product))
+        favoriteProducts.remove(product);
+      else 
+        favoriteProducts.add(product);
+    });
+  }
 
   @override 
   Widget build(BuildContext context){
@@ -38,7 +58,7 @@ class _FavoritePageState extends State<FavoritePage>
                     fontWeight: FontWeight.bold
                   )),
                     Text(
-                      '${itemCount} products',
+                      '${favoriteProducts.length} products',
                        style: TextStyle(
                         color: Colors.white, //change later
                         fontSize: 16,
@@ -60,7 +80,7 @@ class _FavoritePageState extends State<FavoritePage>
             SizedBox(height:24),
             Expanded(
               child: GridView.builder(
-                itemCount: itemCount, //products.length after fetching 
+                itemCount: favoriteProducts.length, 
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 24,
@@ -68,17 +88,12 @@ class _FavoritePageState extends State<FavoritePage>
                   childAspectRatio: 0.8,
                   ),
                 itemBuilder: (context, index) {
-                  //tbi  DisplayItem(product: product)
-                  return Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Text(
-                      'Item ${index +1}',
-                    ),
-                  );
+                  final product = favoriteProducts[index];
+                  return ProductItem(
+                    product: product,
+                    isFavorite: favoriteProducts.contains(product),
+                    onToggleFavorite: () => toggleFavorite(product),
+                    );
                 },
               ),
             ),
