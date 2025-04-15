@@ -1,8 +1,11 @@
+import 'package:custom_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:custom_app/pages/home_page.dart';
+import 'package:custom_app/models/product_model.dart';
 
 void main() {
   runApp(const MyApp());
+  testAPI();
 }
 
 class MyApp extends StatelessWidget {
@@ -32,7 +35,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
    
   List pages = [
-    const HomePage(),
+     HomePage(),
   ];
 
   @override
@@ -43,7 +46,21 @@ class _MyHomePageState extends State<MyHomePage> {
       //   title: Text(widget.title),
       //   centerTitle: true,
       // ),
-      body:  const HomePage()
+      body: HomePage()
     );
   }
 }
+
+void testAPI() async {
+  try{
+    List<Product> products = await ApiService.fetchProducts();
+    for (var product in products) {
+      print('name: ${product.productName}');
+      print('price: ${product.productPrice}');
+      
+    }
+    }catch(e){
+      print('Error $e');
+    }
+  }
+
