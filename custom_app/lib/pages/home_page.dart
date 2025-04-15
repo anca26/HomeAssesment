@@ -10,11 +10,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>{
   // tbi: final List<Product> products = [];
   Color backgroundGray = const Color.fromARGB(255, 244, 244, 244);
+  int itemCount = 12; //delete this later
 
   @override 
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: backgroundGray,
+      backgroundColor: Colors.black,
       body: SafeArea(child: Padding (
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -27,28 +28,57 @@ class _HomePageState extends State<HomePage>{
                 hintText: 'Search product', 
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(16.0),
                   borderSide: BorderSide.none
                   ),
                   
               ),
             ),
-            SizedBox(height:8.0),
+            SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                  'Products', 
+                  style: TextStyle(
+                    color: Colors.white, //change later
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold
+                  )),
+                    Text(
+                      '${itemCount} products found',
+                       style: TextStyle(
+                        color: Colors.white, //change later
+                        fontSize: 16,
+                       ),
+                    ),
+                  ],
+                ),
+                  Icon(
+                    Icons.favorite_border, 
+                    size: 40, 
+                    color: Colors.white),
+              ],),
+            SizedBox(height:24),
             Expanded(
               child: GridView.builder(
-                itemCount: 12, //products.length after fetching 
+                itemCount: itemCount, //products.length after fetching 
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 1,
+                  crossAxisSpacing: 24,
+                  mainAxisSpacing: 24,
+                  childAspectRatio: 0.8,
                   ),
                 itemBuilder: (context, index) {
+                  //tbi  DisplayItem(product: product)
                   return Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(16.0),
                     ),
                     child: Text(
                       'Item ${index +1}',
