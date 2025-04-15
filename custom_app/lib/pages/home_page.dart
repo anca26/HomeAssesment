@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage>{
                     fontWeight: FontWeight.bold
                   )),
                     Text(
-                      '${allProducts.length} products found',
+                      '${searchedProducts.length} products found',
                        style: TextStyle(
                         color: Colors.white, //change later
                         fontSize: 16,
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage>{
             SizedBox(height:24),
             Expanded(
               child: GridView.builder(
-                itemCount: allProducts.length,
+                itemCount: searchedProducts.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 24,
