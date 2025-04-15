@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:custom_app/models/product_model.dart';
+import 'package:custom_app/pages/home_page.dart';
 
 
 class ProductPage extends StatelessWidget{
@@ -12,10 +13,30 @@ class ProductPage extends StatelessWidget{
      return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(child: Padding (
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                 onPressed: () => {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()))
+                 },
+                 icon: Icon(Icons.arrow_back_ios_outlined, size:40),),
+                IconButton(
+                  onPressed: () => {}, 
+                  icon: Icon(
+                    size: 40, 
+                    Icons.favorite_border,
+                    color: Colors.black,
+                    //widget.isFavorite ? Icons.favorite : Icons.favorite_border,
+                    //color: widget.isFavorite ? Colors.deepPurple : Colors.black,
+                    ), )
+              ],
+            ),
             Center(
               child: Image.network(
                 product.productImage,
@@ -29,7 +50,11 @@ class ProductPage extends StatelessWidget{
               style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold),
 
             ),
-            SizedBox(height:8),
+            Container(
+            margin: EdgeInsets.symmetric(vertical: 12),
+            height: 2,
+            color: Colors.grey[200],
+            ),
             Text('\$${product.productPrice}', 
             style: TextStyle(fontSize: 20), 
             ),
@@ -38,26 +63,53 @@ class ProductPage extends StatelessWidget{
               product.productDescription,
               style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 12),
+             Container(
+            margin: EdgeInsets.symmetric(vertical: 12),
+            height: 2,
+            color: Colors.grey[200],
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Rating',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 20),
                 ),
                 Text(
                   '${product.rating.rate} from ${product.rating.count} Reviews', 
                   style: TextStyle(
                     color: Colors.orange, 
-                    fontSize: 16,
+                    fontSize: 18,
                   ),
                   ),
               ],
             ),
+            Spacer(),
+            SizedBox(
+            width: 1000,
+            height: 55,
+            child: ElevatedButton(
+             onPressed: () => {debugPrint("Simulating cart")},
+             style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+             ),
+             child: Text(
+                'ADD TO CART',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: 'TimesNewRoman',
+                ),
+             ),
+             ),
+            ),
           ]
             ),
+          
           ),
         ),
      );

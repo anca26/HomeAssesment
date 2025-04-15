@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage>{
                     Text(
                       '${searchedProducts.length} products found',
                        style: TextStyle(
-                        color: Colors.white, //change later
+                        color: Colors.black, //change later
                         fontSize: 16,
                        ),
                     ),
@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage>{
                     Icon(
                     Icons.favorite_border, 
                     size: 40, 
-                    color: Colors.white),
+                    color: Colors.black),
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritePage(favorites: favoriteProducts) ));
                   }
