@@ -12,7 +12,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage>{
-  final List<Product> products = [];
+  final List<Product> allProducts = [];
+  List<Product> searchedProducts = [];
   Color backgroundGray = const Color.fromARGB(255, 244, 244, 244);
   
   @override 
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage>{
     try {
     List<Product> fetchedProducts = await ApiService.fetchProducts();
     setState(() {
-      products.addAll(fetchedProducts);
+      allProducts.addAll(fetchedProducts);
       });
     }catch(e){
       print('Error at fetching products: $e');
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage>{
                     fontWeight: FontWeight.bold
                   )),
                     Text(
-                      '${products.length} products found',
+                      '${allProducts.length} products found',
                        style: TextStyle(
                         color: Colors.white, //change later
                         fontSize: 16,
@@ -91,7 +92,7 @@ class _HomePageState extends State<HomePage>{
             SizedBox(height:24),
             Expanded(
               child: GridView.builder(
-                itemCount: products.length,
+                itemCount: allProducts.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 24,
@@ -99,19 +100,8 @@ class _HomePageState extends State<HomePage>{
                   childAspectRatio: 0.8,
                   ),
                 itemBuilder: (context, index) {
-                  final product = products[index];
+                  final product = allProducts[index];
                   return ProductItem(product: product);
-
-                  // return Container(
-                  //   alignment: Alignment.center,
-                  //   decoration: BoxDecoration(
-                  //     color: Colors.white,
-                  //     borderRadius: BorderRadius.circular(16),
-                  //   ),
-                  //   child: Text(
-                  //     'Item ${index +1}',
-                  //   ),
-                  // );
                 },
               ),
             ),

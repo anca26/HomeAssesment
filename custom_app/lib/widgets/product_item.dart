@@ -56,13 +56,13 @@ class _ProductItemState extends State<ProductItem>{
            ),
           ),
           Positioned(
-            top: 10,
-            right: 10,
+            top: 3,
+            right: 3,
             child: IconButton(
               onPressed: toggleFavorite, 
               icon: Icon(
                 isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: isFavorite ? Colors.red : Colors.black, 
+                color: isFavorite ? Colors.deepPurple : Colors.black, 
               ),
             ),
           ),
