@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:custom_app/models/product_model.dart';
+import 'package:custom_app/pages/product_page.dart';
 
 class ProductItem extends StatefulWidget{
 
@@ -16,7 +17,12 @@ class _ProductItemState extends State<ProductItem>{
 
   @override
   Widget build(BuildContext context){
-    return Container(
+    return GestureDetector(
+      onTap:() => {
+        Navigator.push(context, MaterialPageRoute(
+        builder: (context) => ProductPage(product: widget.product),),)
+      },
+      child: Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -62,7 +68,8 @@ class _ProductItemState extends State<ProductItem>{
           ),
         ]
       ),
-    );
+    ),
+  );
   }
 
 }
