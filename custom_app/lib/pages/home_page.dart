@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:custom_app/pages/favorite_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -57,10 +58,16 @@ class _HomePageState extends State<HomePage>{
                     ),
                   ],
                 ),
-                  Icon(
+                 IconButton( 
+                  icon: 
+                    Icon(
                     Icons.favorite_border, 
                     size: 40, 
                     color: Colors.white),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritePage() ));
+                  }
+                 ),
               ],),
             SizedBox(height:24),
             Expanded(
