@@ -2,12 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:custom_app/models/product_model.dart';
 import 'package:custom_app/pages/home_page.dart';
 import 'package:custom_app/widgets/expand_description.dart';
+import 'package:custom_app/globals.dart' as globals;
 
 
-class ProductPage extends StatelessWidget{
+class ProductPage extends StatefulWidget{
   final Product product;
-
   ProductPage({required this.product});
+
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage>{
+  bool isFavorite = false;
+
+  void checkFavorite(Product product){
+    setState(() {
+      if(globals.favoriteProducts.contains(product))
+        isFavorite = true;
+    });
+  }
+  void toggleFavorite(Product product){
+    setState(() {
+      if(globals.favoriteProducts.contains(product))
+        {
+          globals.favoriteProducts.remove(product);
+        }
+      else 
+        {
+          if (!globals.favoriteProducts.contains(product))
+            globals.favoriteProducts.add(product);
+        }
+    });
+  }
 
   @override
   Widget build(BuildContext context){
@@ -29,39 +56,47 @@ class ProductPage extends StatelessWidget{
                  },
                  icon: Icon(Icons.arrow_back_ios_outlined, size:40),),
                 IconButton(
-                  onPressed: () => {}, 
+                  onPressed: () => { 
+                    toggleFavorite(widget.product)
+                  }, 
                   icon: Icon(
                     size: 40, 
-                    Icons.favorite_border,
-                    color: Colors.black,
-                    //widget.isFavorite ? Icons.favorite : Icons.favorite_border,
-                    //color: widget.isFavorite ? Colors.deepPurple : Colors.black,
+                    // Icons.favorite_border,
+                    // color: Colors.black,
+                    isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: isFavorite ? Colors.deepPurple : Colors.black,
                     ), )
               ],
             ),
             Center(
               child: Image.network(
-                product.productImage,
+                widget.product.productImage,
                 height: 400,
                 width: 400,
               ),
             ),
             SizedBox(height:24),
+            Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
             Text(
-              product.productName,
+              widget.product.productName.split(' ').take(4).join(' '),
               style: TextStyle(fontSize: 20, fontWeight:  FontWeight.bold),
 
+            ),
+            Text('\$${widget.product.productPrice}', 
+            style: TextStyle(fontSize: 20), 
+            ),
+            ],
             ),
             Container(
             margin: EdgeInsets.symmetric(vertical: 12),
             height: 2,
             color: Colors.grey[200],
             ),
-            Text('\$${product.productPrice}', 
-            style: TextStyle(fontSize: 20), 
-            ),
             SizedBox(height:12),
-            ExpandDescription(text: product.productDescription),
+            ExpandDescription(text: widget.product.productDescription),
             Container(
             margin: EdgeInsets.symmetric(vertical: 12),
             height: 2,
@@ -76,7 +111,7 @@ class ProductPage extends StatelessWidget{
                   style: TextStyle(fontSize: 20),
                 ),
                 Text(
-                  '${product.rating.rate} from ${product.rating.count} Reviews', 
+                  '${widget.product.rating.rate} from ${widget.product.rating.count} Reviews', 
                   style: TextStyle(
                     color: Colors.orange, 
                     fontSize: 18,
