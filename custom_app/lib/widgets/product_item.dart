@@ -7,7 +7,7 @@ import 'package:custom_app/globals.dart' as globals;
 class ProductItem extends StatefulWidget{
 
   final Product product;
-  bool isFavorite = false;
+  bool isFavorite;
   final VoidCallback onToggleFavorite;
   ProductItem({required this.product, required this.isFavorite, required this.onToggleFavorite});
 
@@ -16,10 +16,19 @@ class ProductItem extends StatefulWidget{
   State<ProductItem> createState() => _ProductItemState();
 }
 
+
 class _ProductItemState extends State<ProductItem>{
+
+  void checkFavorite(Product product){
+    setState(() {
+      if(globals.favoriteProducts.contains(product))
+        widget.isFavorite = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context){
+    checkFavorite(widget.product);
     return GestureDetector(
       onTap:() => {
         Navigator.push(context, MaterialPageRoute(

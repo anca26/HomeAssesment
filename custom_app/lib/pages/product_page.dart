@@ -27,6 +27,7 @@ class _ProductPageState extends State<ProductPage>{
       if(globals.favoriteProducts.contains(product))
         {
           globals.favoriteProducts.remove(product);
+          isFavorite = false;
         }
       else 
         {
@@ -38,6 +39,7 @@ class _ProductPageState extends State<ProductPage>{
 
   @override
   Widget build(BuildContext context){
+    checkFavorite(widget.product);
      return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(

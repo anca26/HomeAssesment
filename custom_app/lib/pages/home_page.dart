@@ -18,7 +18,8 @@ class _HomePageState extends State<HomePage>{
   List<Product> searchedProducts = [];
   Color backgroundGray = const Color.fromARGB(255, 232, 232, 232);
   String searchText = "";
-  
+  bool isFavorite = false;
+
   @override 
   void initState(){
     super.initState();
@@ -51,12 +52,20 @@ class _HomePageState extends State<HomePage>{
       if(globals.favoriteProducts.contains(product))
         {
           globals.favoriteProducts.remove(product);
+          isFavorite = false;
         }
       else 
         {
           if (!globals.favoriteProducts.contains(product))
             globals.favoriteProducts.add(product);
         }
+    });
+  }
+
+  void checkFavorite(Product product){
+    setState(() {
+      if(globals.favoriteProducts.contains(product))
+        isFavorite = true;
     });
   }
 
