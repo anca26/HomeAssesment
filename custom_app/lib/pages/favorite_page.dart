@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:custom_app/pages/home_page.dart';
 import 'package:custom_app/widgets/product_item.dart';
 import 'package:custom_app/models/product_model.dart';
+import 'package:custom_app/globals.dart' as globals;
+
 
 
 class FavoritePage extends StatefulWidget{
@@ -15,22 +17,20 @@ class FavoritePage extends StatefulWidget{
 
 class _FavoritePageState extends State<FavoritePage>
 {
-
-  late List<Product> favoriteProducts;
   Color backgroundGray =  Color.fromARGB(255, 232, 232, 232);
 
   @override 
   void initState() {
     super.initState();
-    favoriteProducts = List.from(widget.favorites);
+    globals.favoriteProducts = List.from(widget.favorites);
   }
 
    void toggleFavorite(Product product){
     setState(() {
-      if(favoriteProducts.contains(product))
-        favoriteProducts.remove(product);
+      if(globals.favoriteProducts.contains(product))
+        globals.favoriteProducts.remove(product);
       else 
-        favoriteProducts.add(product);
+        globals.favoriteProducts.add(product);
     });
   }
 
@@ -58,7 +58,7 @@ class _FavoritePageState extends State<FavoritePage>
                     fontWeight: FontWeight.bold
                   )),
                     Text(
-                      '${favoriteProducts.length} products',
+                      '${globals.favoriteProducts.length} products',
                        style: TextStyle(
                         color: Colors.black, 
                         fontSize: 16,
@@ -80,7 +80,7 @@ class _FavoritePageState extends State<FavoritePage>
             SizedBox(height:24),
             Expanded(
               child: GridView.builder(
-                itemCount: favoriteProducts.length, 
+                itemCount: globals.favoriteProducts.length, 
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 24,
@@ -88,10 +88,10 @@ class _FavoritePageState extends State<FavoritePage>
                   childAspectRatio: 0.8,
                   ),
                 itemBuilder: (context, index) {
-                  final product = favoriteProducts[index];
+                  final product = globals.favoriteProducts[index];
                   return ProductItem(
                     product: product,
-                    isFavorite: favoriteProducts.contains(product),
+                    isFavorite: globals.favoriteProducts.contains(product),
                     onToggleFavorite: () => toggleFavorite(product),
                     );
                 },

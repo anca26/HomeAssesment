@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:custom_app/models/product_model.dart';
 import 'package:custom_app/pages/product_page.dart';
+import 'package:custom_app/globals.dart' as globals;
+
 
 class ProductItem extends StatefulWidget{
 
   final Product product;
-  final bool isFavorite;
+  bool isFavorite = false;
   final VoidCallback onToggleFavorite;
   ProductItem({required this.product, required this.isFavorite, required this.onToggleFavorite});
+
 
   @override
   State<ProductItem> createState() => _ProductItemState();
@@ -44,9 +47,17 @@ class _ProductItemState extends State<ProductItem>{
                 ),
               SizedBox(height:12),
               Text(
-                widget.product.productName,
+                widget.product.productName.split(' ').take(3).join(' '),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                 ),
+              ),
+              Text(
+                widget.product.productName.split(' ').skip(3).take(4).join(' '),
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 12,
                  ),
               ),
               Text(

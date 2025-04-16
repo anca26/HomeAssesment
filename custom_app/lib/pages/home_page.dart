@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:custom_app/pages/favorite_page.dart';
 import 'package:custom_app/models/product_model.dart';
 import 'package:custom_app/services/api_service.dart';
+import 'package:custom_app/globals.dart' as globals;
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +16,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>{
   List<Product> allProducts = [];
   List<Product> searchedProducts = [];
-  List<Product> favoriteProducts = [];
   Color backgroundGray = const Color.fromARGB(255, 232, 232, 232);
   String searchText = "";
   
@@ -47,13 +48,14 @@ class _HomePageState extends State<HomePage>{
 
   void toggleFavorite(Product product){
     setState(() {
-      if(favoriteProducts.contains(product))
+      if(globals.favoriteProducts.contains(product))
         {
-          favoriteProducts.remove(product);
+          globals.favoriteProducts.remove(product);
         }
       else 
         {
-          favoriteProducts.add(product);
+          if (!globals.favoriteProducts.contains(product))
+            globals.favoriteProducts.add(product);
         }
     });
   }
@@ -112,7 +114,7 @@ class _HomePageState extends State<HomePage>{
                     size: 40, 
                     color: Colors.black),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritePage(favorites: favoriteProducts) ));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritePage(favorites: globals.favoriteProducts) ));
                   }
                  ),
               ],),
@@ -130,7 +132,7 @@ class _HomePageState extends State<HomePage>{
                   final product = searchedProducts[index];
                   return ProductItem(
                     product: product,
-                    isFavorite: favoriteProducts.contains(product),
+                    isFavorite: globals.favoriteProducts.contains(product),
                     onToggleFavorite: () => toggleFavorite(product),
                     );
                 },
